@@ -1,36 +1,39 @@
 package co.com.poli.appmusicapss.model;
 
-import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
+import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
-@NamedQuery(name="Playlist.findAll", query="SELECT p FROM Playlist p")
+@Table(name = "playlist")
 public class Playlist implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="playlist_id")
-	private Integer playlistId;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long playlistId;
 
-	@Column(name="name_playlist")
+	@NotEmpty
 	private String namePlaylist;
 
-	@Column(name="song_id")
-	private Long songId;
+	@JsonManagedReference
+	@OneToMany(mappedBy = "playlist", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Song> songs;
 
 	public Playlist() {
 	}
 
-	public Integer getPlaylistId() {
+	public Long getPlaylistId() {
 		return this.playlistId;
 	}
 
-	public void setPlaylistId(Integer playlistId) {
+	public void setPlaylistId(Long playlistId) {
 		this.playlistId = playlistId;
 	}
 
@@ -42,12 +45,12 @@ public class Playlist implements Serializable {
 		this.namePlaylist = namePlaylist;
 	}
 
-	public Long getSongId() {
-		return this.songId;
+	public List<Song> getSongId() {
+		return this.songs;
 	}
 
-	public void setSongId(Long songId) {
-		this.songId = songId;
+	public void setSongId(List<Song> songs) {
+		this.songs = songs;
 	}
-	
+
 }

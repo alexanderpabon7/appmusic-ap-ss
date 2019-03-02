@@ -1,46 +1,50 @@
 package co.com.poli.appmusicapss.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
-@NamedQuery(name="Song.findAll", query="SELECT s FROM Song s")
+@Table(name = "song")
 public class Song implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="song_id")
-	private Integer songId;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long songId;
 
-	@Column(name="\"album_ song\"")
+	@NotEmpty
 	private String albumSong;
 
-	@Column(name="\"artist_ song\"")
 	private String artistSong;
 
-	@Column(name="\"title_ song\"")
 	private String titleSong;
 
+	@NotNull
 	@Temporal(TemporalType.DATE)
-	@Column(name="\"year_ song\"")
+	@Column(name="year_ song")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date yearSong;
+
+	@JsonBackReference
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Playlist playlist;
 
 	public Song() {
 	}
 
-	public Integer getSongId() {
+	public Long getSongId() {
 		return this.songId;
 	}
 
-	public void setSongId(Integer songId) {
+	public void setSongId(Long songId) {
 		this.songId = songId;
 	}
 
@@ -76,4 +80,11 @@ public class Song implements Serializable {
 		this.yearSong = yearSong;
 	}
 
+	public Playlist getPlaylist() {
+		return this.playlist;
+	}
+
+	public void setPlaylist(Playlist playlist) {
+		this.playlist = playlist;
+	}
 }
