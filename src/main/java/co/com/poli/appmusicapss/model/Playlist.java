@@ -10,47 +10,58 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
-@Table(name = "playlist")
+@Table(name="playlists")
 public class Playlist implements Serializable {
-	
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long playlistId;
+	private Integer id;
 
 	@NotEmpty
-	private String namePlaylist;
+	private String description;
 
-	@JsonManagedReference
-	@OneToMany(mappedBy = "playlist", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Song> songs;
+	@NotEmpty
+	private String name;
+
+	@JsonBackReference
+	//bi-directional many-to-one association to Song
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Song song;
 
 	public Playlist() {
 	}
 
-	public Long getPlaylistId() {
-		return this.playlistId;
+	public Integer getId() {
+		return this.id;
 	}
 
-	public void setPlaylistId(Long playlistId) {
-		this.playlistId = playlistId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
-	public String getNamePlaylist() {
-		return this.namePlaylist;
+	public String getDescription() {
+		return this.description;
 	}
 
-	public void setNamePlaylist(String namePlaylist) {
-		this.namePlaylist = namePlaylist;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public List<Song> getSongId() {
-		return this.songs;
+	public String getName() {
+		return this.name;
 	}
 
-	public void setSongId(List<Song> songs) {
-		this.songs = songs;
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Song getSong() {
+		return this.song;
+	}
+
+	public void setSong(Song song) {
+		this.song = song;
 	}
 
 }
