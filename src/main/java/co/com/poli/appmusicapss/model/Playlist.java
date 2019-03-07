@@ -1,6 +1,5 @@
 package co.com.poli.appmusicapss.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.io.Serializable;
@@ -12,6 +11,7 @@ import javax.validation.constraints.NotEmpty;
 @Entity
 @Table(name="playlists")
 public class Playlist implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -23,11 +23,11 @@ public class Playlist implements Serializable {
 
 	@NotEmpty
 	private String name;
-
-	@JsonBackReference
+	
+	@JsonManagedReference
 	//bi-directional many-to-one association to Song
-	@ManyToOne(fetch = FetchType.LAZY)
-	private Song song;
+	@OneToMany(mappedBy = "playlist", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Song> songs;
 
 	public Playlist() {
 	}
@@ -56,12 +56,25 @@ public class Playlist implements Serializable {
 		this.name = name;
 	}
 
-	public Song getSong() {
-		return this.song;
+	public List<Song> getSongs() {
+		return this.songs;
 	}
 
-	public void setSong(Song song) {
-		this.song = song;
+	public void setSongs(List<Song> songs) {
+		this.songs = songs;
 	}
 
+	public Song addSong(Song song) {
+		getSongs().add(song);
+		song.setPlaylist(this);
+
+		return song;
+	}
+
+	public Song removeSong(Song song) {
+		getSongs().remove(song);
+		song.setPlaylist(null);
+
+		return song;
+	}
 }

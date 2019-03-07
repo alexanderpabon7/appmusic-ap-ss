@@ -1,95 +1,88 @@
 package co.com.poli.appmusicapss.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="songs")
+@Table(name = "songs")
 public class Song implements Serializable {
+	
     private static final long serialVersionUID = 1L;
 
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+	private Integer id;
 
-    @NotEmpty
-    private String artist;
+	@NotEmpty
+	private String album;
 
-    @NotEmpty
-    private String title;
+	@NotEmpty
+	private String artist;
 
-    @NotEmpty
-    private String yearsong;
+	@NotEmpty
+	private String title;
 
-    @JsonManagedReference
+	@NotEmpty
+	private String yearsong;
+
+	@JsonBackReference
     //bi-directional many-to-one association to Playlist
-    @OneToMany(mappedBy = "song", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Playlist> playlists;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Playlist playlist;
 
-    public Song() {
-    }
+	public Song() {
+	}
 
-    public Integer getId() {
-        return this.id;
-    }
+	public Integer getId() {
+		return this.id;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public String getArtist() {
-        return this.artist;
-    }
+	public String getAlbum() {
+		return this.album;
+	}
 
-    public void setArtist(String artist) {
-        this.artist = artist;
-    }
+	public void setAlbum(String album) {
+		this.album = album;
+	}
 
-    public String getTitle() {
-        return this.title;
-    }
+	public String getArtist() {
+		return this.artist;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public void setArtist(String artist) {
+		this.artist = artist;
+	}
 
-    public String getYearsong() {
-        return this.yearsong;
-    }
+	public String getTitle() {
+		return this.title;
+	}
 
-    public void setYearsong(String yearsong) {
-        this.yearsong = yearsong;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public List<Playlist> getPlaylists() {
-        return this.playlists;
-    }
+	public String getYearsong() {
+		return this.yearsong;
+	}
 
-    public void setPlaylists(List<Playlist> playlists) {
-        this.playlists = playlists;
-    }
+	public void setYearsong(String yearsong) {
+		this.yearsong = yearsong;
+	}
 
-    public Playlist addPlaylist(Playlist playlist) {
-        getPlaylists().add(playlist);
-        playlist.setSong(this);
+	public Playlist getPlaylist() {
+		return this.playlist;
+	}
 
-        return playlist;
-    }
-
-    public Playlist removePlaylist(Playlist playlist) {
-        getPlaylists().remove(playlist);
-        playlist.setSong(null);
-
-        return playlist;
-    }
+	public void setPlaylist(Playlist playlist) {
+		this.playlist = playlist;
+	}
 
 }

@@ -5,9 +5,9 @@ spring:
   datasource:
     driverClassName: org.postgresql.Driver
     platform: postgres
-    url: jdbc:postgresql://ec2-54-204-41-109.compute-1.amazonaws.com:5432/da2rc5qf9949lo
-    username: yokmuplyvilxeb 
-    password: 1b09bcf5dd8c82746f9d09587171376286f2b602bf5c82eedf192d17511e2f78
+    url: jdbc:postgresql://localhost:5432/appmusic
+    username: postgres
+    password: 6308
   jpa:
     hibernate.ddl-auto: update
     generate-ddl: true
