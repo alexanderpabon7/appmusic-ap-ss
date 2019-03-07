@@ -31,7 +31,7 @@ public class Song implements Serializable {
 
 	@JsonBackReference
     //bi-directional many-to-one association to Playlist
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Playlist playlist;
 
 	public Song() {

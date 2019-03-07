@@ -2,6 +2,7 @@ package co.com.poli.appmusicapss.controller;
 
 import java.util.List;
 
+import co.com.poli.appmusicapss.dao.IPlaylistDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,12 +16,14 @@ public class PlaylistController {
 
 	@Autowired
 	private IPlaylistServices playlistServices;
+	@Autowired
+	private IPlaylistDAO playlistDAO;
 
 	@GetMapping(PlaylistPath.PLAYLIST)
 	public Response findAllPlaylist() {
 		Response response;
 		try {
-			response = responseMet(playlistServices.findAllPlaylist(), "Get", 200, Boolean.TRUE);
+			response = responseMet(playlistDAO.findAll(), "Get", 200, Boolean.TRUE);
 		} catch (Exception e) {
 			response = responseMet(null, e.getMessage(), 404, Boolean.FALSE);
 		}
