@@ -16,14 +16,12 @@ public class PlaylistController {
 
 	@Autowired
 	private IPlaylistServices playlistServices;
-	@Autowired
-	private IPlaylistDAO playlistDAO;
 
 	@GetMapping(PlaylistPath.PLAYLIST)
 	public Response findAllPlaylist() {
 		Response response;
 		try {
-			response = responseMet(playlistDAO.findAll(), "Get", 200, Boolean.TRUE);
+			response = responseMet(playlistServices.findAllPlaylist(), "Get", 200, Boolean.TRUE);
 		} catch (Exception e) {
 			response = responseMet(null, e.getMessage(), 404, Boolean.FALSE);
 		}

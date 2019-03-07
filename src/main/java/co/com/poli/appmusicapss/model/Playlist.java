@@ -26,8 +26,7 @@ public class Playlist implements Serializable {
 	
 	@JsonManagedReference
 	//bi-directional many-to-one association to Song
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id")
+	@OneToMany(mappedBy = "id", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Song> songs;
 
 	public Playlist() {
