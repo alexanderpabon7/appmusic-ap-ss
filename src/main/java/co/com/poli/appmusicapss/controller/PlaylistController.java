@@ -2,6 +2,7 @@ package co.com.poli.appmusicapss.controller;
 
 import java.util.List;
 
+import co.com.poli.appmusicapss.dao.IPlaylistDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
